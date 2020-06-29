@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'detection_demo/style.css' %}">{% endblock %}
+{% block title %}Detection Project{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-9">
+                <h1>Detection (DLS project)</h1>
+
+                <h2>About</h2>
+                <p>
+                    This is a realization of 1st scenario of Detection project, a senior project of 1st semester
+                    advanced track of DLS.
+                    Students were to implement a detection model into demo project available online or as a mobile app.
+                </p>
+
+                <h2>Choosing frameworks</h2>
+                <p>
+                    As a framework for detection model I've chosen <code>torchvision.models.detection</code> - a
+                    collection of native models for detection from PyTorch. For detection I use pretrained model -
+                    <code>fasterrcnn_resnet50_fpn</code>. It was trained on COCO dataset.
+                </p>
+                <p>
+                    For a web demo backend I've chosen Django - a fantastic and very powerful framework with ton of features.
+                    Static files are served by Nginx.
+                    For project's frontend I used Bootstrap, FontAwesome and jQuery - for pretty look and AJAX queries.
+                </p>
+
+                <h2>Testing detector on random images</h2>
+                <p>
+                    Here you can test the model's ability to detect objects in multiple images.
+                    Unfortunately, I'm running this demo on a small mini PC without discrete grafics card,
+                    that's why it takes about 30 seconds to process an image. Please be patient!
+                </p>
+
+                <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators">
+                        {% for i in test_images %}
+                            <li data-target="#carousel" data-slide-to="{{ forloop.counter0 }}"
+                                    {% if forloop.counter0 == 0 %} class="active"{% endif %}></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for i in test_images %}
+                            <div class="carousel-item{% if forloop.counter0 == 0 %} active{% endif %}">
+                                <img id="{{ i }}" src="{% get_static_prefix %}detection_demo/raw_images/{{ i }}.png" class="d-block w-100"
+                                     alt="...">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="row row-buttons">
+                    <div class="col-5"></div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary btn-block rounded-pill shadow img-invoker">
+                            FasterRCNN
+                        </button>
+                    </div>
+                </div>
+
+                <h2>Test your own images</h2>
+                <p>Finally, you can upload your own images to test detection model. Enjoy =)</p>
+
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col"><input id="own_image_uploader" type="file" accept=".png,.jpg,.jpeg"></div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-8">
+                        <img src="/" id="own_image_detected">
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col">
+                        <button class="file-upload btn btn-primary btn-block rounded-pill shadow" id="own_submit">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    {% csrf_token %}
+{% endblock %}
+{% block scripts %}
+    <script>
+        let detect_preloaded_url = '{% url "detection_detect_preloaded" %}';
+        let detect_uploaded_url = '{% url "detection_detect_uploaded" %}';
+        let static_prefix = '{% get_static_prefix %}';
+    </script>
+    <script src="{% static 'csrf_loader.js' %}"></script>
+    <script src="{% static 'detection_demo/detect_preloaded.js' %}"></script>
+    <script src="{% static 'detection_demo/detect_uploaded.js' %}"></script>
+{% endblock %}

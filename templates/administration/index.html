@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Nikita Chestnov's Portfolio{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-8">
+                <h1>Nikita Chestnov</h1>
+                <h2>About me</h2>
+                <p>
+                    I'm 4th grade Bachelor student at MIPT, Department of Problems in Physics and Energetics.
+                    My Bachelor's diploma project is about optical electrical properties of single-wall carbon nanotubes filled with 1D iodine structures.
+                </p>
+                <p>
+                    Currently looking for Master's programme in CS field.
+                </p>
+                <h2>Interests</h2>
+                <p>I'm into ML and DL stuff.</p>
+                <p>To get better knowledge of DL, I'm currently finishing 1st semester of <a href="https://www.dlschool.org/">Deep Learning School (DLS)</a> advanced track.</p>
+                <h2>Available demos:</h2>
+                <ul>
+                    <li><a href="{% url 'detection_index' %}">Detection (DLS Project)</a></li>
+                </ul>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}

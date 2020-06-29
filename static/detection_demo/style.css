@@ -1,0 +1,20 @@
+.row-buttons, .col {
+    padding: 20px;
+}
+.image-example {
+    width: 100%;
+}
+
+.loader, .own-loader {
+    display: none;
+}
+
+
+.file-upload input {
+  display: none;
+}
+
+#own_image_detected {
+    display: none;
+    width: 100%;
+}
